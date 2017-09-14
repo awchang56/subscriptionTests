@@ -11,8 +11,8 @@ import {
   View
 } from 'react-native';
 import { Button, Container, Content, Text, Title, Body, Header, Footer } from 'native-base';
-import { NativeModules } from 'react-native';
-const { InAppUtils } = NativeModules;
+// import { NativeModules } from 'react-native';
+const InAppBilling = require("react-native-billing");
 
 
 export default class subscriptionTest extends Component {
@@ -29,6 +29,19 @@ export default class subscriptionTest extends Component {
       }
       console.log('products: ', products);
     })
+  }
+
+  handleYearlySub() {
+    console.log(InAppBilling);
+    InAppBilling.open()
+    .then(() => InAppBilling.purchase('android.test.purchased'))
+    .then((details) => {
+      console.log("You purchased: ", details)
+      return InAppBilling.close()
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   render() {
@@ -48,7 +61,7 @@ export default class subscriptionTest extends Component {
               Subscribe monthly
             </Text>
           </Button>
-          <Button info onPress={() => console.log('subscribed annually')}>
+          <Button info onPress={this.handleYearlySub}>
             <Text>
               Subscribe annually
             </Text>
