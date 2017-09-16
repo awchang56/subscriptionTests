@@ -16,25 +16,23 @@
 On the command prompt run the following commands
 
 ```sh
-$ git clone https://github.com/start-react/native-starter-kit.git
+$ git clone https://github.com/renaissanceperiodization/DietDesigner-React-Native.git
 
-$ cd native-starter-kit/
+$ cd DietDesigner-React-Native/
 
-$ npm install
+$ yarn install
 ```
 
 ```sh
 $ react-native link
 ```
 
-[CodePush](https://github.com/Microsoft/react-native-code-push) plugin installation and key deployment.
-
 
 ### 3. Simulate for iOS
 
 **Method One**
 
-* Open the project in XCode from **ios/NativeStarterKit.xcodeproj**
+* Open the project in XCode from **ios/subscriptionTest.xcodeproj**
 
 * Hit the play button.
 
