@@ -10,10 +10,15 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-import { Button, Container, Content, Text, Title, Body, Header, Footer } from 'native-base';
+import { Button, Container, Content, Text, Title, Body, Header, Footer, Separator, Thumbnail, Spinner } from 'native-base';
 import { NativeModules } from 'react-native';
 import iapReceiptValidator from 'iap-receipt-validator';
-const password = '103a060028924160b2890249b7706a8c'; // Shared Secret from iTunes connect
+import config from './config/config.js';
+import ImagePicker from 'react-native-image-picker';
+import axios from 'axios';
+import uploadImage from './uploadImage';
+
+const password = config.itunesConnect.password; // Shared Secret from iTunes connect
 const production = false; // use sandbox or production url for validation
 const validateReceipt = iapReceiptValidator(password, production);
 
@@ -33,17 +38,22 @@ const validate = async (receiptData) => {
 const { InAppUtils } = NativeModules;
 
 let products = [
-  'com.subTest.annualSub',
   'com.subTest.monthly',
 ];
 
 
 export default class subscriptionTest extends Component {
+  constructor() {
+    super();
+    this.state = {
+      profilePicUrl: require('./assets/AvatarPlaceHolder.png'),
+      isLoading: false,
+    }
+  }
 
   handleMonthlySub() {
     var productIdentifier = 'com.subTest.monthly';
     InAppUtils.loadProducts(products, (error, products) => {
-    // console.log('products: ', products);
       if (error) {
         console.log('error: ', error);
       }
@@ -103,7 +113,44 @@ export default class subscriptionTest extends Component {
   }
 
   handlePicture() {
+    let options = {
+      title: 'Select Avatar',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    };
+    ImagePicker.showImagePicker(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      }
+      else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      }
+      else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      }
+      else {
+        console.log('this.setState: ', this);
+        this.setState({isLoading: true});
+        let options = uploadImage(response.data);
+        console.log('options: ', options);
+        axios.post(options.url, options.body)
+        .then( response => {
+          console.log('response url = ', response.data.secure_url);
+          this.setState({
+            profilePicUrl: {uri: response.data.secure_url},
+            isLoading: false,
+          });
+        })
+        .catch(err => {
+          console.log('err=', err);
+          this.setState({isLoading: false});
 
+        })
+      }
+    });
   }
 
   render() {
@@ -143,11 +190,14 @@ export default class subscriptionTest extends Component {
               Create receipt
             </Text>
           </Button>
-          <Button info outline onPress={this.handlePicture}>
+          <Button info outline onPress={this.handlePicture.bind(this)}>
             <Text>
               Take Photo
             </Text>
           </Button>
+          {
+            this.state.isLoading ? <Spinner /> : <Thumbnail large source={this.state.profilePicUrl} />
+          }
         </Body>
         </Content>
         <Footer style={{backgroundColor: 'turquoise'}} />
