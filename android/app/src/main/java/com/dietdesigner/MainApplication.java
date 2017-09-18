@@ -1,4 +1,4 @@
-package com.subscriptiontest;
+package com.dietdesigner;
 
 import android.app.Application;
 

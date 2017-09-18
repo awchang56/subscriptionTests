@@ -1,5 +1,5 @@
 <resources>
     <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey"></string>
-    <string name="app_name">subscriptionTest</string>
+    <string name="app_name">DietDesigner</string>
     <string name="RNB_GOOGLE_PLAY_LICENSE_KEY">null<!-- MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnJCPuBf8wLC+BeE5PsUE6lvcQG4JV2u81d0b/TUVphELGUgeRh9Myv1yKO0Ko2KJe4ywbz2jfCEeFmMUfKZSRKbhdPp+q846pQ2iahv3WpuDFnv3PRd1ekjt+mlyvKDRFsPgDSI0xEYotSMkcGYSNj81BEql/M0uEaktvPyj3jRz9T19BEjnEUyrB1hjAPQWQTyOi1bCQI7K8PhUzDDYOoXXqudW59wsumWdnnfqf0boF/8+5zpB84T7EgRep9j0cbhyzwKBLFTL0OrEpRRzV+KWBPdSb4ijreFk+kpZ4ytl+XjVHq6yG9L/PgMfiuTt6UuzkIbr2sIRjQLMTgi8nQIDAQAB --></string>
 </resources>

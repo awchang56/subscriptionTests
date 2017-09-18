@@ -43,7 +43,7 @@ let products = [
 ];
 
 
-class subscriptionTest extends Component {
+class DietDesigner extends Component {
   constructor() {
     super();
     this.state = {
@@ -172,7 +172,7 @@ class subscriptionTest extends Component {
         <Content padder>
         <Body>
           <Text>
-            NEW CHANGES: 10
+            NEW CHANGES: 11
           </Text>
           <Button info outline onPress={this.handleMonthlySub}>
             <Text>
@@ -239,8 +239,8 @@ const codePushOptions = {
   installMode: codePush.InstallMode.ON_NEXT_RESUME
 }
 
-subscriptionTest = codePush(codePushOptions)(subscriptionTest);
+DietDesigner = codePush(codePushOptions)(DietDesigner);
 
-module.exports = subscriptionTest;
+module.exports = DietDesigner;
 
-AppRegistry.registerComponent('subscriptionTest', () => subscriptionTest);
+AppRegistry.registerComponent('DietDesigner', () => DietDesigner);

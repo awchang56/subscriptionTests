@@ -45,12 +45,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.subscriptiontest",
+    package = "com.dietdesigner",
 )
 
 android_resource(
     name = "res",
-    package = "com.subscriptiontest",
+    package = "com.dietdesigner",
     res = "src/main/res",
 )
 

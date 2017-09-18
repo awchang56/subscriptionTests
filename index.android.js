@@ -15,7 +15,7 @@ import { Button, Container, Content, Text, Title, Body, Header, Footer } from 'n
 const InAppBilling = require("react-native-billing");
 
 
-export default class subscriptionTest extends Component {
+export default class DietDesigner extends Component {
 
   handleMonthlySub() {
     let products = [
@@ -98,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('subscriptionTest', () => subscriptionTest);
+AppRegistry.registerComponent('DietDesigner', () => DietDesigner);
