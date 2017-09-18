@@ -17,6 +17,7 @@ import config from './config/config.js';
 import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
 import uploadImage from './uploadImage';
+import codePush from 'react-native-code-push';
 
 const password = config.itunesConnect.password; // Shared Secret from iTunes connect
 const production = false; // use sandbox or production url for validation
@@ -42,13 +43,17 @@ let products = [
 ];
 
 
-export default class subscriptionTest extends Component {
+class subscriptionTest extends Component {
   constructor() {
     super();
     this.state = {
       profilePicUrl: require('./assets/AvatarPlaceHolder.png'),
       isLoading: false,
     }
+  }
+
+  componentDidMount() {
+    codePush.sync({ installMode: codePush.InstallMode.ON_NEXT_RESUME });
   }
 
   handleMonthlySub() {
@@ -122,6 +127,7 @@ export default class subscriptionTest extends Component {
     };
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
+      this.setState({isLoading: true});
       if (response.didCancel) {
         console.log('User cancelled image picker');
       }
@@ -133,7 +139,7 @@ export default class subscriptionTest extends Component {
       }
       else {
         console.log('this.setState: ', this);
-        this.setState({isLoading: true});
+        // this.setState({isLoading: true});
         let options = uploadImage(response.data);
         console.log('options: ', options);
         axios.post(options.url, options.body)
@@ -159,12 +165,15 @@ export default class subscriptionTest extends Component {
         <Header>
           <Body>
             <Title>
-              Subscription Tests
+              App Scaffolding
             </Title>
           </Body>
         </Header>
         <Content padder>
         <Body>
+          <Text>
+            NEW CHANGES: 10
+          </Text>
           <Button info outline onPress={this.handleMonthlySub}>
             <Text>
               Subscribe monthly
@@ -224,5 +233,14 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+}
+
+subscriptionTest = codePush(codePushOptions)(subscriptionTest);
+
+module.exports = subscriptionTest;
 
 AppRegistry.registerComponent('subscriptionTest', () => subscriptionTest);
